@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             TypeSeeder::class,
             ProjectSeeder::class,
+            PublicMessageSeeder::class,
+            ApplySeeder::class,
         ]);
     }
 }
