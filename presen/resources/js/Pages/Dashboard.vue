@@ -9,6 +9,7 @@ import { Head } from '@inertiajs/vue3';
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
+            <a href="/projects">案件一覧へ</a>
         </template>
 
         <div class="py-12">

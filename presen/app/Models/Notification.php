@@ -22,11 +22,11 @@ class Notification extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function chats(){
+    public function chat(){
         return $this->belongsTo(Chat::class);
     }
 
-    public function direct_messages(){
+    public function direct_message(){
         return $this->belongsTo(DirectMessage::class);
     }
 }
