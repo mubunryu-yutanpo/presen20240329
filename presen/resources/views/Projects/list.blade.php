@@ -12,7 +12,9 @@
 <div>
     @foreach($projects as $project)
         <div>
-            <h2>{{ $project->title }}</h2>
+            <a href="{{ route('project.detail', $project->id) }}">
+                <h2>{{ $project->title }}</h2>
+            </a>
             <div>
                 投稿者： {{ $project->user->name }}
                 <img src="{{ asset($project->user->avatar) }}" alt="">
