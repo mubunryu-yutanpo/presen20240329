@@ -13,6 +13,8 @@
     <p>{{ $user->name }}さん</p>
     <img src="{{ asset($user->avatar) }}" alt="">
 
+    <a href="{{ route('project.create') }}">案件の登録</a>
+
     <div>
         <p>POSTしたやつ</p>
         @foreach($postedProjects as $post)

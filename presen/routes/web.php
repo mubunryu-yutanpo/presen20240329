@@ -60,8 +60,14 @@ Route::middleware('auth')->group(function () {
     //==========================================================================================================
 
     Route::get('/project/detail/{project_id}', [ProjectController::class, 'detail'])->name('project.detail');
+
+    Route::get('/project/create', [ProjectController::class, 'create'])->name('project.create');
+    Route::post('/project/create', [ProjectController::class, 'addProject'])->name('project.add');
     Route::get('/project/edit/{project_id}', [ProjectController::class, 'edit'])->name('project.edit');
+    Route::post('/project/edit/{project_id}/update', [ProjectController::class, 'updateProject'])->name('project.update');
+    Route::post('/project/edit/{project_id}/delete', [ProjectController::class, 'deleteProject'])->name('project.delete');
     Route::post('/project/detail/{project_id}', [ProjectController::class, 'apply'])->name('apply');
+
 });
 
 require __DIR__.'/auth.php';
