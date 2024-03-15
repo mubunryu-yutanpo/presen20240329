@@ -14,42 +14,42 @@
         @csrf
 
         <label for="title" class="">タイトル *</label>
-        <input id="title" class="" type="text" name="title" required placeholder="255文字以内">
+        <input id="title" class="" type="text" name="title" required placeholder="255文字以内" value="{{ old('title') }}">
         @error('title')
-            <p>{{ $message }}</p>
+            <p role="alert">{{ $message }}</p>
         @enderror
 
         <label for="type">プロジェクトの種類 *</label>
-        <select name="type" id="type" value="選択してください">
-            <option value="1">情報提供</option>
-            <option value="2">案件・依頼</option>
-            <option value="3">求人</option>
-            <option value="4">サービス提供</option>
-            <option value="5">その他</option>
+        <select name="type" id="type">
+            <option value="" hidden="">選択してください</option>
+
+            @foreach($types as $type)
+                <option value="{{ $type->id }}" {{ old('type', $project->type ?? '') == $type->id ? 'selected' : '' }}>{{ $type->name }}</option>
+            @endforeach
         </select>
         @error('type')
-            <p>{{ $message }}</p>
+            <p role="alert">{{ $message }}</p>
         @enderror
 
 
         <label for="price">料金 *</label>
-        <input id="price" class="" type="number" name="price" required>
+        <input id="price" class="" type="number" name="price" required value="{{ old('price') }}">
         @error('price')
-            <p>{{ $message }}</p>
+            <p role="alert">{{ $message }}</p>
         @enderror
 
 
         <label for="content">内容 *</label>
-        <textarea id="content" class="" name="content" id="" cols="30" rows="10" required placeholder="プロジェクトの内容を記入してください"></textarea>
+        <textarea id="content" class="" name="content" cols="30" rows="10" required placeholder="プロジェクトの内容を2,000文字以内で記入してください">{{ old('content') }}</textarea>
         @error('content')
-            <p>{{ $message }}</p>
+            <p role="alert">{{ $message }}</p>
         @enderror
 
 
         <label for="thumbnail">サムネイル</label>
-        <input id="thumbnail" class="" type="file" name="thumbnail">
+        <input id="thumbnail" class="" type="file" name="thumbnail" value="{{ old('thumbnail') }}">
         @error('thumbnail')
-            <p>{{ $message }}</p>
+            <p role="alert">{{ $message }}</p>
         @enderror
 
 

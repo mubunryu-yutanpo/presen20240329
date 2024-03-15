@@ -9,6 +9,8 @@
 </head>
 <body>
 <h1>Mypage</h1>
+<a href="{{ route('chat.list', $user->id) }}" class="">メッセージ一覧へ</a>
+<a href="{{ route('notifications', $user->id) }}" class="">通知一覧へ</a>
 <div>
     <p>{{ $user->name }}さん</p>
     <img src="{{ asset($user->avatar) }}" alt="">

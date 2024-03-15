@@ -12,7 +12,7 @@ class PublicMessage extends Model
     protected $fillable = [
         'user_id',
         'project_id',
-        'content',
+        'comment',
     ];
 
     // リレーション

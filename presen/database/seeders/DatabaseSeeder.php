@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\DirectMessage;
 use App\Models\Project;
 use Illuminate\Database\Seeder;
 
@@ -26,6 +27,8 @@ class DatabaseSeeder extends Seeder
             ProjectSeeder::class,
             PublicMessageSeeder::class,
             ApplySeeder::class,
+            ChatSeeder::class,
+            DirectMessageSeeder::class,
         ]);
     }
 }
