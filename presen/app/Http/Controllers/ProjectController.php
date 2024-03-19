@@ -14,6 +14,7 @@ use App\Models\DirectMessage;
 use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
 use Mockery\Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Requests\ValidRequest;
@@ -27,9 +28,12 @@ class ProjectController extends Controller
     // プロジェクト一覧ページ
     public function list(){
         try{
-            $projects = Project::with('user')->paginate(6);
+            $projects = Project::with('user')->paginate(1);
 
-            return view('Projects.list', compact('projects'));
+
+            return Inertia::render('Project/List', [
+                'projects' => $projects,
+            ]);
 
         }catch (Exception $e){
             // エラー時
@@ -49,7 +53,12 @@ class ProjectController extends Controller
                 ->where('project_id', $project_id)
                 ->exists();
 
-            return view('projects.detail', compact('project', 'user', 'messages', 'applyFlg'));
+            return Inertia::render('Project/Detail', [
+                'project'  => $project,
+                'user'     => $user,
+                'messages' => $messages,
+                'applyFlg' => $applyFlg,
+            ]);
 
         }catch (Exception $e){
             // エラー時

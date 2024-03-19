@@ -30,7 +30,7 @@ class ApplyNotification extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Apply Notification',
+            subject: 'プロジェクトに応募しました！',
         );
     }
 

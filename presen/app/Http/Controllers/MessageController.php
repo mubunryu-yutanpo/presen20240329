@@ -59,6 +59,12 @@ class MessageController extends Controller
             $user_id = Auth::id();
             $chat = Chat::findOrFail($chat_id);
 
+            // そのチャットのメッセージは既読に変更する
+            Notification::where('receiver_id', $user_id)
+                        ->where('chat_id', $chat_id)
+                        ->where('read', false)
+                        ->update(['read' => true]);
+
             return view('Chats.message', compact('messages', 'user_id', 'chat'));
 
         } catch (Exception $e) {

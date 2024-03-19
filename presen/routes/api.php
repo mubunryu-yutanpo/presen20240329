@@ -2,6 +2,13 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MypageController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\MessageController;
+use Illuminate\Foundation\Application;
+use Inertia\Inertia;
+
 
 /*
 |--------------------------------------------------------------------------

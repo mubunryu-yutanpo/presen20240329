@@ -38,7 +38,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/projects', [ProjectController::class, 'list'])->name('list');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     //==========================================================================================================
     // プロフィール関連
     //==========================================================================================================
@@ -52,9 +52,12 @@ Route::middleware('auth')->group(function () {
     //==========================================================================================================
 
     Route::get('/mypage', [MypageController::class, 'getMypage'])->name('mypage');
-    Route::get('/posted/projects/{user_id}', [MypageController::class, 'postedProjects'])->name('posted.projects');
-    Route::get('/commented/projects/{user_id}', [MypageController::class, 'commentedProjects'])->name('commented.projects');
-    Route::get('/applied/projects/{user_id}', [MypageController::class, 'appliedProjects'])->name('applied.projects');
+//    Route::get('/mypage', function () {
+//        return Inertia::render('Profile/Mypage');
+//    })->name('mypage');
+    Route::get('/posted/projects/{user_id}', [MypageController::class, 'postedProjects'])->where('user_id', '[0-9]+')->name('posted.projects');
+    Route::get('/commented/projects/{user_id}', [MypageController::class, 'commentedProjects'])->where('user_id', '[0-9]+')->name('commented.projects');
+    Route::get('/applied/projects/{user_id}', [MypageController::class, 'appliedProjects'])->where('user_id', '[0-9]+')->name('applied.projects');
 
     //==========================================================================================================
     // 案件関連
@@ -64,10 +67,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/project/create', [ProjectController::class, 'create'])->name('project.create');
     Route::post('/project/create', [ProjectController::class, 'addProject'])->where('project_id', '[0-9]+')->name('project.add');
-    Route::get('/project/edit/{project_id}', [ProjectController::class, 'edit'])->name('project.edit');
+    Route::get('/project/edit/{project_id}', [ProjectController::class, 'edit'])->where('project_id', '[0-9]+')->name('project.edit');
     Route::patch('/project/edit/{project_id}/update', [ProjectController::class, 'updateProject'])->where('project_id', '[0-9]+')->name('project.update');
-    Route::post('/project/edit/{project_id}/delete', [ProjectController::class, 'deleteProject'])->name('project.delete');
-    Route::post('/project/detail/{project_id}', [ProjectController::class, 'apply'])->name('apply');
+    Route::post('/project/edit/{project_id}/delete', [ProjectController::class, 'deleteProject'])->where('project_id', '[0-9]+')->name('project.delete');
+    Route::post('/project/detail/{project_id}', [ProjectController::class, 'apply'])->where('project_id', '[0-9]+')->name('apply');
 
     //==========================================================================================================
     // チャット・メッセージ関連
