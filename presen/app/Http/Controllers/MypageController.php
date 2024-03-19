@@ -13,6 +13,7 @@ use App\Models\PublicMessage;
 use App\Models\Chat;
 use Illuminate\Support\Facades\Auth;
 use Mockery\Exception;
+use Inertia\Inertia;
 
 class MypageController extends Controller
 {
@@ -23,18 +24,32 @@ class MypageController extends Controller
             $user = User::find(Auth::id());
 
             // 投稿した案件の取得
-            $postedProjects = Project::where('user_id', $user->id)->latest()->take(5)->get();
+            //$postedProjects = Project::where('user_id', $user->id)->latest()->take(5)->get();
+            $postedProjects = Project::where('user_id', $user->id)->latest()->take(5)->get()->map(function ($project) {
+                $project->detailUrl = route('project.detail', ['project_id' => $project->id]);
+                return $project;
+            });
 
-            // 応募した案件の取得
-            $appliedProjects = $user->applies()->with('project')->latest()->take(5)->get();
+            // 応募した案件
+            $appliedProjects = $user->applies()->with('project')->latest()->take(5)->get()->map(function ($apply) {
+                $apply->project->detailUrl = route('project.detail', ['project_id' => $apply->project->id]);
+                return $apply;
+            });
 
-            // コメントした案件の取得
-            $commentedProjects = $user->public_messages()->with('project')->latest()->take(5)->get();
+            // コメントした案件
+            $commentedProjects = $user->public_messages()->with('project')->latest()->take(5)->get()->map(function ($comment) {
+                $comment->project->detailUrl = route('project.detail', ['project_id' => $comment->project->id]);
+                return $comment;
+            });
 
             // 通知
 
-            // Viewに渡す
-            return view('users.mypage', compact('user','postedProjects', 'appliedProjects', 'commentedProjects'));
+            return Inertia::render('Profile/Mypage', [
+                'user' => $user,
+                'postedProjects' => $postedProjects,
+                'appliedProjects' => $appliedProjects,
+                'commentedProjects' => $commentedProjects,
+            ]);
 
         }catch (Exception $e){
             // エラー時

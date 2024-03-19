@@ -11,6 +11,7 @@
 <body>
 <h1>案件詳細</h1>
 <div>
+
     <h2>{{ $project->title }}</h2>
     <div>
         投稿者： {{ $user->name }}
