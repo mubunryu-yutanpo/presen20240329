@@ -14,7 +14,9 @@ use App\Models\DirectMessage;
 use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Inertia\Response;
 use Mockery\Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Requests\ValidRequest;
@@ -73,10 +75,12 @@ class ProjectController extends Controller
 
 
     // プロジェクトの新規作成ページへ
-    public function create(){
+    public function new(){
         try{
             $types = Type::all();
-            return view('Projects.create', compact('types'));
+            return Inertia::render('Project/New', [
+               'types' => $types,
+            ]);
 
         }catch (Exception $e){
             // エラー時
@@ -87,6 +91,7 @@ class ProjectController extends Controller
 
     // プロジェクトの新規登録処理
     public function addProject(ValidRequest $request){
+
         try{
 
             $project = new Project;
@@ -128,16 +133,26 @@ class ProjectController extends Controller
 
             if ($saved) {
                 // 成功時
-                return redirect('/mypage')->with('message', 'プロジェクトを投稿しました！')->with('message_type', 'success');
+                return redirect()->route('mypage')->with([
+                    'message' => 'プロジェクトを投稿しました！',
+                    'status'  => 'success',
+                ]);
             } else {
                 // 失敗時
-                return redirect()->back()->with('message', 'データの更新に失敗しました')->with('message_type', 'error');
+                return redirect()->route('mypage')->with([
+                    'message' => '処理に失敗しました',
+                    'status'  => 'error',
+                ]);
             }
 
         }catch (Exception $e){
             // エラー時
             Log::error('addProjectエラー：'. $e->getMessage());
-            return redirect('/')->with('message', 'エラーが発生しました。')->with('message_type', 'error');
+            return redirect('/')->with([
+                'message' => 'エラーが発生しました。',
+                'status'  => 'error',
+            ]);
+
         }
     }
 
@@ -264,12 +279,18 @@ class ProjectController extends Controller
             Mail::to($user->email)->send(new ApplyNotification($user, $project));
 
 
-            return redirect()->back()->with('message', '応募しました！')->with('message_type', 'success');
+            return redirect()->route('mypage')->with([
+                'message' => '応募しました！',
+                'status'  => 'success',
+            ]);
 
         }catch (Exception $e){
             // エラー時
             Log::error('applyエラー：'. $e->getMessage());
-            return redirect('/')->with('message', 'エラーが発生しました。')->with('message_type', 'error');
+            return redirect('/')->with([
+                'message' => 'エラーが発生しました',
+                'status'  => 'error',
+            ]);
         }
     }
 

@@ -65,7 +65,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/project/detail/{project_id}', [ProjectController::class, 'detail'])->name('project.detail');
 
-    Route::get('/project/create', [ProjectController::class, 'create'])->name('project.create');
+    Route::get('/project/create', [ProjectController::class, 'new'])->name('project.new');
     Route::post('/project/create', [ProjectController::class, 'addProject'])->where('project_id', '[0-9]+')->name('project.add');
     Route::get('/project/edit/{project_id}', [ProjectController::class, 'edit'])->where('project_id', '[0-9]+')->name('project.edit');
     Route::patch('/project/edit/{project_id}/update', [ProjectController::class, 'updateProject'])->where('project_id', '[0-9]+')->name('project.update');
