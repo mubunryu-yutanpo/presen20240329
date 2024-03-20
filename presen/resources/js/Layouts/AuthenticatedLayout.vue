@@ -6,6 +6,7 @@ import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
+import FlashMessage from "@/Components/FlashMessage.vue";
 
 const showingNavigationDropdown = ref(false);
 </script>
@@ -69,6 +70,7 @@ const showingNavigationDropdown = ref(false);
                                         <DropdownLink :href="route('logout')" method="post" as="button">
                                             Log Out
                                         </DropdownLink>
+                                        <DropdownLink :href="route('project.new')">プロジェクト新規作成</DropdownLink>
                                     </template>
                                 </Dropdown>
                             </div>
@@ -146,6 +148,7 @@ const showingNavigationDropdown = ref(false);
 
             <!-- Page Content -->
             <main>
+                <FlashMessage />
                 <slot />
             </main>
         </div>
