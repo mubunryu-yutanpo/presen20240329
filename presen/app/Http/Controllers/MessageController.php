@@ -14,12 +14,14 @@ use App\Models\DirectMessage;
 use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Inertia\Inertia;
 use Mockery\Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Requests\ValidRequest;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use function Termwind\render;
 
 
 class MessageController extends Controller
@@ -32,23 +34,32 @@ class MessageController extends Controller
     // DM一覧(自分が関係するchat一覧)ページへ
     public function chatList($user_id){
         try {
-            $user_id = Auth::id();
 
             $chats = Chat::where('user1_id', $user_id)
                 ->orWhere('user2_id', $user_id)
-                ->with('direct_messages.user') // メッセージとそのユーザーを事前にロード
+                ->with(['direct_messages' => function($query) {
+                    // メッセージを作成日時の降順でソートして最新のものだけ取得
+                    $query->latest()->take(1);
+                }, 'direct_messages.user']) // メッセージとそのユーザーを事前にロード
                 ->paginate(1);
 
-            // 各チャットに対して未読メッセージの有無を判定
             foreach ($chats as $chat) {
+                // 各チャットに対して未読メッセージの有無を判定
                 $chat->unread = $chat->hasUnreadMessages();
+
+                // DMの相手情報
+                $partner_id = $chat->user1_id == $user_id ? $chat->user2_id : $chat->user1_id;
+                $chat->partner = User::find($partner_id);
             }
 
-            return view('Chats.list', compact('chats'));
+            return Inertia::render('Message/List', compact('chats'));
 
         } catch (Exception $e) {
             Log::error('chatListエラー：' . $e->getMessage());
-            return redirect('/mypage')->with('message', 'エラーが発生しました')->with('message_type', 'error');
+            return redirect('/')->with([
+                'message' => 'エラーが発生しました',
+                'status'  => 'error',
+            ]);
         }
     }
 
@@ -65,11 +76,14 @@ class MessageController extends Controller
                         ->where('read', false)
                         ->update(['read' => true]);
 
-            return view('Chats.message', compact('messages', 'user_id', 'chat'));
+            return Inertia::render('Message/Detail', compact('messages', 'user_id', 'chat'));
 
         } catch (Exception $e) {
             Log::error('chatDetailエラー：' . $e->getMessage());
-            return redirect('/mypage')->with('message', 'エラーが発生しました')->with('message_type', 'error');
+            return redirect('/')->with([
+                'message' => 'エラーが発生しました',
+                'status'  => 'error',
+            ]);
         }
     }
 
@@ -102,12 +116,17 @@ class MessageController extends Controller
 
             $notification->save();
 
-            // とりあえずリダイレクト
-            return redirect()->back()->with('message', 'メッセージを送信しました！')->with('messge_type', 'success');
+            return redirect()->back()->with([
+                'message' => 'メッセージを送信しました！',
+                'status'  => 'success',
+            ]);
 
         } catch (Exception $e) {
             Log::error('addDirectMessageエラー：' . $e->getMessage());
-            return redirect('/mypage')->with('message', 'エラーが発生しました')->with('message_type', 'error');
+            return redirect('/')->with([
+                'message' => 'エラーが発生しました',
+                'status'  => 'error',
+            ]);
         }
     }
 
@@ -128,11 +147,17 @@ class MessageController extends Controller
             $publicMessage->save();
 
             // とりあえずリダイレクト
-            return redirect()->back()->with('message', 'メッセージを送信しました！')->with('message_type', 'success');
+            return redirect()->back()->with([
+                'message' => 'メッセージを送信しました！',
+                'status'  => 'success',
+            ]);
 
         }catch (Exception $e) {
             Log::error('addPublicMessageエラー：' . $e->getMessage());
-            return redirect('/mypage')->with('message', 'エラーが発生しました')->with('message_type', 'error');
+            return redirect('/')->with([
+                'message' => 'エラーが発生しました',
+                'status'  => 'error',
+            ]);
         }
     }
 
@@ -144,12 +169,14 @@ class MessageController extends Controller
         try {
             $notifications = Notification::where('receiver_id', $user_id)->where('read', false)->with('sender')->paginate(1);
 
-            return view('Users.notifications', compact('notifications'));
+            return Inertia::render('Profile/Notification', compact('notifications'));
 
         }catch (Exception $e) {
             Log::error('addPublicMessageエラー：' . $e->getMessage());
-            return redirect('/mypage')->with('message', 'エラーが発生しました')->with('message_type', 'error');
+            return redirect('/')->with([
+                'message' => 'エラーが発生しました',
+                'status'  => 'error',
+            ]);
         }
     }
-
 }

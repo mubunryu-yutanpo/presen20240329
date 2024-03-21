@@ -1,14 +1,13 @@
 
 <template>
-    <Head title="ProjectList"></Head>
+    <Head title="PostList"></Head>
 
     <AuthenticatedLayout>
         <template #header>
-            <h1 class="c-title c-title--top">プロジェクト一覧</h1>
+            <h1 class="c-title c-title--top">投稿したプロジェクト</h1>
         </template>
 
-        <ProjectList :projects="projects" />
-
+        <ProjectList user="" :projects="projects" />
     </AuthenticatedLayout>
 
 </template>

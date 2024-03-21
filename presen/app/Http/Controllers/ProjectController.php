@@ -14,9 +14,7 @@ use App\Models\DirectMessage;
 use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
-use Inertia\Response;
 use Mockery\Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Requests\ValidRequest;
@@ -33,14 +31,15 @@ class ProjectController extends Controller
             $projects = Project::with('user')->paginate(1);
 
 
-            return Inertia::render('Project/List', [
-                'projects' => $projects,
-            ]);
+            return Inertia::render('Project/List', compact('projects'));
 
         }catch (Exception $e){
             // エラー時
             Log::error('listエラー：'. $e->getMessage());
-            return redirect('/')->with('message', 'エラーが発生しました。')->with('message_type', 'error');
+            return redirect('/')->with([
+                'message' => 'エラーが発生しました',
+                'status'  => 'error',
+            ]);
         }
     }
 
@@ -55,17 +54,15 @@ class ProjectController extends Controller
                 ->where('project_id', $project_id)
                 ->exists();
 
-            return Inertia::render('Project/Detail', [
-                'project'  => $project,
-                'user'     => $user,
-                'messages' => $messages,
-                'applyFlg' => $applyFlg,
-            ]);
+            return Inertia::render('Project/Detail', compact('project', 'user', 'messages', 'applyFlg'));
 
         }catch (Exception $e){
             // エラー時
             Log::error('detailエラー：'. $e->getMessage());
-            return redirect('/')->with('message', 'エラーが発生しました。')->with('message_type', 'error');
+            return redirect('/')->with([
+                'message' => 'エラーが発生しました',
+                'status'  => 'error',
+            ]);
         }
     }
 
@@ -78,14 +75,15 @@ class ProjectController extends Controller
     public function new(){
         try{
             $types = Type::all();
-            return Inertia::render('Project/New', [
-               'types' => $types,
-            ]);
+            return Inertia::render('Project/New', compact('types'));
 
         }catch (Exception $e){
             // エラー時
             Log::error('projectのcreateエラー：'. $e->getMessage());
-            return redirect('/')->with('message', 'エラーが発生しました。')->with('message_type', 'error');
+            return redirect('/')->with([
+                'message' => 'エラーが発生しました',
+                'status'  => 'error',
+            ]);
         }
     }
 
@@ -128,7 +126,7 @@ class ProjectController extends Controller
                 'type_id'   => $request->input('type'),
                 'price'     => $request->input('price'),
                 'content'   => $request->input('content'),
-                'thumbnail' => 'uploads/'. $filename,
+                'thumbnail' => '/uploads/'. $filename,
             ])->save();
 
             if ($saved) {
@@ -165,15 +163,21 @@ class ProjectController extends Controller
 
             // ユーザーが違った場合
             if($user_id !== Auth::id()){
-                return redirect('/')->with('message', '不正な操作です')->with('message_type', 'error');
+                return redirect('/')->with([
+                    'message' => '不正な操作です',
+                    'status'  => 'error',
+                ]);
             }
 
-            return view('Projects.edit', compact('project', 'types'));
+            return Inertia::render('Project/Edit', compact('project', 'types'));
 
         }catch (Exception $e){
             // エラー時
             Log::error('edit(project)エラー：'. $e->getMessage());
-            return redirect('/')->with('message', 'エラーが発生しました。')->with('message_type', 'error');
+            return redirect('/')->with([
+                'message' => 'エラーが発生しました',
+                'status'  => 'error',
+            ]);
         }
     }
 
@@ -204,7 +208,7 @@ class ProjectController extends Controller
                 // 画像をpublic/uploadsディレクトリに移動
                 $path = public_path('uploads/' . $filename);
                 $compressedImage->save($path);
-                $filename = 'uploads/' . $filename;
+                $filename = '/uploads/' . $filename;
 
             } else {
                 // サムネが未選択の場合（既にサムネがある場合はそれをそのまま保存）
@@ -212,7 +216,7 @@ class ProjectController extends Controller
             }
 
             // DBに保存するパスが 'uploads/' で二重にならないようにチェック
-            $thumbnail = Str::startsWith($filename, 'uploads/') ? $filename : 'uploads/' . $filename;
+            $thumbnail = Str::startsWith($filename, '/uploads/') ? $filename : '/uploads/' . $filename;
 
             $project->update([
                'title'     => $request->input('title'),
@@ -222,17 +226,25 @@ class ProjectController extends Controller
                'thumbnail' => $thumbnail,
             ]);
 
-            return redirect('/mypage')->with('message', 'プロジェクトの内容を更新しました！')->with('message_type', 'success');
-
+            return redirect()->route('mypage')->with([
+                'message' => 'プロジェクトを更新しました！',
+                'status'  => 'success',
+            ]);
 
         }catch (ModelNotFoundException $e){
             Log::error('updateProjectエラー：' . $e->getMessage());
-            return redirect('list')->with('message', '指定されたプロジェクトは存在しません')->with('message_type', 'error');
+            return redirect()->route('list')->with([
+                'message' => '指定されたプロジェクトは存在しません',
+                'status'  => 'error',
+            ]);
 
         }catch (Exception $e){
             // エラー時
             Log::error('updateProjectエラー：'. $e->getMessage());
-            return redirect('/')->with('message', 'エラーが発生しました。')->with('message_type', 'error');
+            return redirect('/')->with([
+                'message' => 'エラーが発生しました',
+                'status'  => 'error',
+            ]);
         }
     }
 
@@ -249,17 +261,25 @@ class ProjectController extends Controller
 
             $project->delete();
 
-            return redirect('/mypage')->with('message', 'プロジェクトを削除しました')->with('message_type', 'success');
+            return redirect()->route('mypage')->with([
+                'message' => 'プロジェクトを削除しました',
+                'status'  => 'success',
+            ]);
 
 
         }catch (ModelNotFoundException $e){
             Log::error('deleteProjectエラー：' . $e->getMessage());
-            return redirect('list')->with('message', '指定されたプロジェクトは存在しません')->with('message_type', 'error');
-
+            return redirect()->route('mypage')->with([
+                'message' => '指定されたプロジェクトは存在しません',
+                'status'  => 'error',
+            ]);
         }catch (Exception $e){
             // エラー時
             Log::error('deleteProjectエラー：'. $e->getMessage());
-            return redirect('/')->with('message', 'エラーが発生しました。')->with('message_type', 'error');
+            return redirect('/')->with([
+                'message' => 'エラーが発生しました',
+                'status'  => 'error',
+            ]);
         }
     }
 

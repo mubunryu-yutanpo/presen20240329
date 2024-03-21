@@ -70,6 +70,12 @@ const showingNavigationDropdown = ref(false);
                                         <DropdownLink :href="route('logout')" method="post" as="button">
                                             Log Out
                                         </DropdownLink>
+                                        <DropdownLink :href="route('list')">全てのプロジェクト</DropdownLink>
+                                        <DropdownLink :href="route('mypage')">マイページ</DropdownLink>
+                                        <DropdownLink :href="route('chat.list', $page.props.auth.user.id)">メッセージ</DropdownLink>
+                                        <DropdownLink :href="route('posted.projects', $page.props.auth.user.id)">投稿したプロジェクト</DropdownLink>
+                                        <DropdownLink :href="route('applied.projects', $page.props.auth.user.id)">応募したプロジェクト</DropdownLink>
+                                        <DropdownLink :href="route('commented.projects', $page.props.auth.user.id)">コメントしたプロジェクト</DropdownLink>
                                         <DropdownLink :href="route('project.new')">プロジェクト新規作成</DropdownLink>
                                     </template>
                                 </Dropdown>

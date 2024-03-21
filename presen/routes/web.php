@@ -51,10 +51,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // マイページ関連
     //==========================================================================================================
 
-    Route::get('/mypage', [MypageController::class, 'getMypage'])->name('mypage');
-//    Route::get('/mypage', function () {
-//        return Inertia::render('Profile/Mypage');
-//    })->name('mypage');
+    Route::get('/mypage', [MypageController::class, 'mypage'])->name('mypage');
     Route::get('/posted/projects/{user_id}', [MypageController::class, 'postedProjects'])->where('user_id', '[0-9]+')->name('posted.projects');
     Route::get('/commented/projects/{user_id}', [MypageController::class, 'commentedProjects'])->where('user_id', '[0-9]+')->name('commented.projects');
     Route::get('/applied/projects/{user_id}', [MypageController::class, 'appliedProjects'])->where('user_id', '[0-9]+')->name('applied.projects');
@@ -68,7 +65,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/project/create', [ProjectController::class, 'new'])->name('project.new');
     Route::post('/project/create', [ProjectController::class, 'addProject'])->where('project_id', '[0-9]+')->name('project.add');
     Route::get('/project/edit/{project_id}', [ProjectController::class, 'edit'])->where('project_id', '[0-9]+')->name('project.edit');
-    Route::patch('/project/edit/{project_id}/update', [ProjectController::class, 'updateProject'])->where('project_id', '[0-9]+')->name('project.update');
+    Route::post('/project/edit/{project_id}/update', [ProjectController::class, 'updateProject'])->where('project_id', '[0-9]+')->name('project.update');
     Route::post('/project/edit/{project_id}/delete', [ProjectController::class, 'deleteProject'])->where('project_id', '[0-9]+')->name('project.delete');
     Route::post('/project/detail/{project_id}', [ProjectController::class, 'apply'])->where('project_id', '[0-9]+')->name('apply');
 

@@ -42,7 +42,7 @@
             <InputError :message="form.errors.content"></InputError>
 
 
-            <ImagePreview label="サムネイル" inputId="thumbnail" name="thumbnail" @file-selected="handleFileChange"></ImagePreview>
+            <ImagePreview label="サムネイル" inputId="thumbnail" name="thumbnail" thumbnail="/uploads/default-thumbnail.png" @file-selected="handleFileChange"></ImagePreview>
             <InputError :message="form.errors.thumbnail"></InputError>
 
 
