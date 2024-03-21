@@ -18,7 +18,7 @@ use Inertia\Inertia;
 class MypageController extends Controller
 {
     // マイページ表示
-    public function getMypage(){
+    public function mypage(){
         try{
             // ユーザー情報の取得
             $user = User::find(Auth::id());
@@ -54,7 +54,10 @@ class MypageController extends Controller
         }catch (Exception $e){
             // エラー時
             Log::error('getMypageエラー：'. $e->getMessage());
-            return redirect('/')->with('message', 'エラーが発生しました。')->with('message_type', 'error');
+            return redirect('/')->with([
+                'message' => 'エラーが発生しました',
+                'status'  => 'error',
+            ]);
         }
     }
 
@@ -65,41 +68,69 @@ class MypageController extends Controller
             $user = User::find($user_id);
             $projects = Project::where('user_id', $user_id)->latest()->paginate(1);
 
-            return view('users.posts', compact('user','projects'));
+            return Inertia::render('Profile/Posts', compact('user', 'projects'));
 
         }catch (Exception $e){
             // エラー時
             Log::error('postedProjectsエラー：'. $e->getMessage());
-            return redirect('/')->with('message', 'エラーが発生しました。')->with('message_type', 'error');
+            return redirect('/')->with([
+                'message' => 'エラーが発生しました',
+                'status'  => 'error',
+            ]);
         }
     }
     // 応募した案件一覧ページ
     public function appliedProjects($user_id){
         try{
             $user = User::find($user_id);
-            $projects = Apply::where('user_id', $user->id)->with('project')->paginate(5);
 
-            return view('Users.applies', compact('user', 'projects'));
+            $uniqueProjectIds = Apply::where('user_id', $user_id)
+                ->pluck('project_id')
+                ->unique()
+                ->toArray();
+
+            $projects = Project::where('id', $uniqueProjectIds)->with('user')->paginate(5);
+
+
+            return Inertia::render('Profile/Applies', compact('user', 'projects'));
 
         }catch (Exception $e){
             // エラー時
             Log::error('appliedProjectsエラー：'. $e->getMessage());
-            return redirect('/')->with('message', 'エラーが発生しました。')->with('message_type', 'error');
+            return redirect('/')->with([
+                'message' => 'エラーが発生しました',
+                'status'  => 'error',
+            ]);
         }
     }
 
     // コメントした案件一覧ページ
     public function commentedProjects($user_id){
         try{
-            $user = User::find($user_id);
-            $projects = PublicMessage::where('user_id', $user->id)->with('project')->paginate(5);
 
-            return view('Users.comments', compact('user', 'projects'));
+            $user = User::find($user_id);
+
+            // ユニークなプロジェクトIDのリストを取得
+            $uniqueProjectIds = PublicMessage::where('user_id', $user_id)
+                ->pluck('project_id')
+                ->unique()
+                ->toArray();
+
+            // プロジェクト情報を取得
+            $projects = Project::whereIn('id', $uniqueProjectIds)
+                ->with('user') // プロジェクトに紐づくユーザー情報も取得
+                ->paginate(5);
+
+
+            return Inertia::render('Profile/Comments', compact('user', 'projects'));
 
         }catch (Exception $e){
             // エラー時
             Log::error('commentedProjectsエラー：'. $e->getMessage());
-            return redirect('/')->with('message', 'エラーが発生しました。')->with('message_type', 'error');
+            return redirect('/')->with([
+                'message' => 'エラーが発生しました',
+                'status'  => 'error',
+            ]);
         }
     }
 

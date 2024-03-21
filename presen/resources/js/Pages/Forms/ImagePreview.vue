@@ -9,17 +9,25 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import {onMounted, ref} from 'vue';
 
 const props = defineProps({
     label: String,
     inputId: String,
     name: String,
+    thumbnail: String,
 });
 
 const emits = defineEmits(['file-selected']);
 
 const imagePreview = ref(null);
+
+onMounted(() => {
+    // 親コンポーネントから渡されたthumbnailがある場合、それをimagePreviewの初期値とする
+    if (props.thumbnail) {
+        imagePreview.value = props.thumbnail;
+    }
+});
 
 function handleFileChange(event) {
     const file = event.target.files[0];
