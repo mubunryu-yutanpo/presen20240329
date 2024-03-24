@@ -10,6 +10,12 @@
 
             <!--      詳細      -->
             <div class="p-detail__detail">
+                <!--       シェア         -->
+                <button class="p-detail__share" @click="shareOnX">
+                    <i class="fa-brands fa-x-twitter"></i>
+                    Xにシェア
+                </button>
+
                 <h3 class="c-title c-title--project p-detail__title">{{ project.title }}</h3>
 
                 <div class="c-box--image p-detail__thumbnail">
@@ -19,7 +25,7 @@
                 <h4 class="c-text p-detail__title--sub">【内容】</h4>
                 <p class="c-text p-detail__text">{{ project.content }}</p>
 
-                <p class="c-price p-detail__price">{{ project.price }}</p>
+                <p class="c-price p-detail__price">{{ formattedPrice }} 円</p>
             </div>
 
             <!--      コメント      -->
@@ -28,8 +34,8 @@
 
                     <div class="c-box--user p-publicMessage__user">
                         <p class="c-text--user p-publicMessage__user--name">{{ message.user.name }}</p>
-                        <div class="c-box--image p-publicMessage__user--container">
-                            <img :src="message.user.avatar" alt="" class="c-image p-publicMessage__user--image">
+                        <div class="c-box--image p-publicMessage__avatar">
+                            <img :src="message.user.avatar" alt="" class="c-image p-publicMessage__avatar--image">
                         </div>
                     </div>
 
@@ -60,12 +66,26 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import {Head, Link} from "@inertiajs/vue3";
 import CommentForm from "@/Pages/Forms/PublicMessageCommentForm.vue";
 import ApplyForm from "@/Pages/Forms/ApplyForm.vue";
+import {computed} from "vue";
 
 
-defineProps([
-    'project',
-    'user',
-    'messages',
-    'applyFlg',
-]);
+const { project, user, messages, applyFlg } = defineProps({
+    project: Object,
+    user: Object,
+    messages: Array,
+    applyFlg: Boolean,
+});
+
+// 価格を3桁区切りに
+const formattedPrice = computed(() => {
+    return Number(project.price).toLocaleString('ja-JP');
+});
+
+// Xにシェアする関数
+const shareOnX = () => {
+    const xText = `プロジェクト名: 【 ${project.title} 】- match-マッチ-　IT技術のアウトソーシングをもっと気軽に！ぜひ試してみてね！`;
+    const xUrl = `https://sonzaisinaikedone.com/project/detail/${project.id}`;
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(xText)}&url=${encodeURIComponent(xUrl)}`;
+    window.open(twitterUrl, '_blank');
+};
 </script>

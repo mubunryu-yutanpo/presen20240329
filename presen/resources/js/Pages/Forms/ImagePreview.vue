@@ -15,7 +15,7 @@ const props = defineProps({
     label: String,
     inputId: String,
     name: String,
-    thumbnail: String,
+    imageName: String,
 });
 
 const emits = defineEmits(['file-selected']);
@@ -23,9 +23,9 @@ const emits = defineEmits(['file-selected']);
 const imagePreview = ref(null);
 
 onMounted(() => {
-    // 親コンポーネントから渡されたthumbnailがある場合、それをimagePreviewの初期値とする
-    if (props.thumbnail) {
-        imagePreview.value = props.thumbnail;
+    // 親コンポーネントから渡されたthumbnail(avatar)がある場合、それをimagePreviewの初期値とする
+    if (props.imageName) {
+        imagePreview.value = props.imageName;
     }
 });
 

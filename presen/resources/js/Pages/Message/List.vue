@@ -6,23 +6,27 @@
             <h1 class="c-title c-title--top">DM一覧</h1>
         </template>
 
-        <div class="c-box--message">
+        <div class="c-box--message p-wrap">
 
             <div class="c-box--dm p-directMessage" v-for="chat in chats.data" :key="chat.id">
 
                 <div class="c-box--user p-directMessage__user">
-                    <div class="p-directMessage__user--image">
-                        <img :src="chat.partner.avatar" class="p-directMessage__user--image--item">
+                    <div class="p-directMessage__avatar">
+                        <img :src="chat.partner.avatar" class="p-directMessage__avatar--image">
                     </div>
                     <p class="p-directMessage__user--name">{{ chat.partner.name }}</p>
                 </div>
 
                 <div class="p-directMessage__notification">
                     <p class="p-directMessage__notification--unread" v-if="chat.unread">新しいメッセージがあります</p>
-<!--                    <p class="p-directMessage__notification&#45;&#45;read" v-else>{{ chat.direct_message[0].comment }}</p>-->
+
+                    <!-- direct_messagesが存在し、かつ長さが0より大きい場合のみメッセージを表示 -->
+                    <p class="p-directMessage__notification--read" v-else-if="chat.direct_messages && chat.direct_messages.length > 0">
+                        {{ chat.direct_messages[0].comment }}
+                    </p>
                 </div>
 
-                <Link :href="`/${chat.id}/${chat.partner.id}/${$page.props.auth.user.id}`">メッセージを確認する</Link>
+                <Link :href="`/chat/${chat.id}`">メッセージを確認する</Link>
             </div>
         </div>
 

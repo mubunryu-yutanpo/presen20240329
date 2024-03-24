@@ -2,7 +2,7 @@
     <Head title="NewProject"></Head>
     <AuthenticatedLayout>
         <template #header>
-            <h1 class="c-title c-title--top">プロジェクト詳細</h1>
+            <h1 class="c-title c-title--top">プロジェクト新規作成</h1>
         </template>
 
         <form @submit.prevent="createProject" class="c-form p-create">

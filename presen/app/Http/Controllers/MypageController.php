@@ -66,7 +66,7 @@ class MypageController extends Controller
         try{
 
             $user = User::find($user_id);
-            $projects = Project::where('user_id', $user_id)->latest()->paginate(1);
+            $projects = Project::where('user_id', $user_id)->latest()->paginate(6);
 
             return Inertia::render('Profile/Posts', compact('user', 'projects'));
 
@@ -89,7 +89,7 @@ class MypageController extends Controller
                 ->unique()
                 ->toArray();
 
-            $projects = Project::where('id', $uniqueProjectIds)->with('user')->paginate(5);
+            $projects = Project::where('id', $uniqueProjectIds)->with('user')->paginate(6);
 
 
             return Inertia::render('Profile/Applies', compact('user', 'projects'));
@@ -119,7 +119,7 @@ class MypageController extends Controller
             // プロジェクト情報を取得
             $projects = Project::whereIn('id', $uniqueProjectIds)
                 ->with('user') // プロジェクトに紐づくユーザー情報も取得
-                ->paginate(5);
+                ->paginate(6);
 
 
             return Inertia::render('Profile/Comments', compact('user', 'projects'));

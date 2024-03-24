@@ -7,14 +7,14 @@
         </template>
 
         <div class="c-siteView">
-            <form @submit.prevent="createProject" class="c-form p-edit">
+            <form @submit.prevent="updateProject" class="c-form p-edit">
 
                 <label for="title" class="c-label p-edit__label">タイトル *</label>
                 <input id="title" class="c-input p-edit__input" type="text" name="title" required placeholder="255文字以内" v-model="form.title">
                 <InputError :message="form.errors.title"></InputError>
 
                 <label for="type">プロジェクトの種類 *</label>
-                <select v-model="form.type" name="type" id="type" class="c-select p-edit__select">
+                <select v-model="form.type" name="type" id="type" class="c-select p-edit__select" required>
                     <option value="" hidden>選択してください</option>
                     <option v-for="type in types" :key="type.id" :value="type.id">{{ type.name }}</option>
                 </select>
@@ -44,11 +44,11 @@
                 <InputError :message="form.errors.content"></InputError>
 
 
-                <ImagePreview label="サムネイル" inputId="thumbnail" name="thumbnail" :thumbnail="props.project.thumbnail" @file-selected="handleFileChange"></ImagePreview>
+                <ImagePreview label="サムネイル" inputId="thumbnail" name="thumbnail" :imageName="props.project.thumbnail" @file-selected="handleFileChange"></ImagePreview>
                 <InputError :message="form.errors.thumbnail"></InputError>
 
 
-                <input class="c-submit p-edit__submit" type="submit" value="更新して保存">
+                <input class="c-submit p-edit__submit" type="submit" :disabled="form.processing" value="更新して保存">
 
             </form>
 
@@ -68,7 +68,7 @@ import InputError from "@/Components/InputError.vue";
 import ImagePreview from "@/Pages/Forms/ImagePreview.vue";
 import {ref} from "vue";
 
-const props =defineProps({
+const props = defineProps({
     project : Object,
     types : Array,
 });
@@ -89,7 +89,7 @@ function handleFileChange(file) {
 }
 
 // 更新処理
-function createProject() {
+function updateProject() {
     const formData = new FormData();
     formData.append('title', form.title);
     formData.append('type', form.type);

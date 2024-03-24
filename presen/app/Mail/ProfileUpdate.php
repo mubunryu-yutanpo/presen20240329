@@ -8,20 +8,19 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Project;
 use App\Models\User;
 
-class ApplyNotification extends Mailable
+class ProfileUpdate extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $user;
-    public $project;
-
-    public function __construct(User $user, Project $project)
+    /**
+     * Create a new message instance.
+     */
+    public function __construct(User $user)
     {
         $this->user = $user;
-        $this->project = $project;
     }
 
     /**
@@ -30,7 +29,7 @@ class ApplyNotification extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'プロジェクトに応募しました！',
+            subject: 'プロフィールが更新されました',
         );
     }
 
@@ -40,11 +39,8 @@ class ApplyNotification extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.apply_notification',
-            with: [
-                'user' => $this->user,
-                'project' => $this->project,
-            ],
+            view: 'emails.profile_update',
+            with: ['user' => $this->user],
         );
     }
 

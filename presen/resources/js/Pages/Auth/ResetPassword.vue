@@ -53,7 +53,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="パスワード" />
+                <InputLabel for="password" value="新しいパスワード" />
 
                 <TextInput
                     id="password"

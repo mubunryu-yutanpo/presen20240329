@@ -8,20 +8,18 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Project;
 use App\Models\User;
 
-class ApplyNotification extends Mailable
+class PasswordUpdate extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $user;
-    public $project;
-
-    public function __construct(User $user, Project $project)
+    /**
+     * Create a new message instance.
+     */
+    public function __construct(User $user)
     {
         $this->user = $user;
-        $this->project = $project;
     }
 
     /**
@@ -30,7 +28,7 @@ class ApplyNotification extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'プロジェクトに応募しました！',
+            subject: 'パスワード変更のお知らせ',
         );
     }
 
@@ -40,11 +38,8 @@ class ApplyNotification extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.apply_notification',
-            with: [
-                'user' => $this->user,
-                'project' => $this->project,
-            ],
+            view: 'emails.password_update',
+            with: ['user' => $this->user],
         );
     }
 
