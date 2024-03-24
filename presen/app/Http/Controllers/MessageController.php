@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Mail\ApplyNotification;
 use App\Models\Type;
 use App\Models\Project;
 use App\Models\User;
@@ -16,7 +15,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Mockery\Exception;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Requests\ValidRequest;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Mail;
@@ -41,7 +39,7 @@ class MessageController extends Controller
                     // メッセージを作成日時の降順でソートして最新のものだけ取得
                     $query->latest()->take(1);
                 }, 'direct_messages.user']) // メッセージとそのユーザーを事前にロード
-                ->paginate(1);
+                ->paginate(10);
 
             foreach ($chats as $chat) {
                 // 各チャットに対して未読メッセージの有無を判定
@@ -90,6 +88,7 @@ class MessageController extends Controller
     // DM追加
     public function addDirectMessage(ValidRequest $request, $chat_id, $user1_id, $user2_id){
         try{
+
             $message = $request->input('message');
 
             $chat = Chat::findOrFail($chat_id);
@@ -151,25 +150,6 @@ class MessageController extends Controller
                 'message' => 'メッセージを送信しました！',
                 'status'  => 'success',
             ]);
-
-        }catch (Exception $e) {
-            Log::error('addPublicMessageエラー：' . $e->getMessage());
-            return redirect('/')->with([
-                'message' => 'エラーが発生しました',
-                'status'  => 'error',
-            ]);
-        }
-    }
-
-
-    //===================================================================================
-    // 通知一覧
-    //===================================================================================
-    public function notifications($user_id){
-        try {
-            $notifications = Notification::where('receiver_id', $user_id)->where('read', false)->with('sender')->paginate(1);
-
-            return Inertia::render('Profile/Notification', compact('notifications'));
 
         }catch (Exception $e) {
             Log::error('addPublicMessageエラー：' . $e->getMessage());

@@ -26,9 +26,45 @@ use Illuminate\Support\Str;
 class ProjectController extends Controller
 {
     // プロジェクト一覧ページ
-    public function list(){
+    public function list(Request $request){
         try{
-            $projects = Project::with('user')->paginate(1);
+            $option = $request->query('sort', 'newest');
+
+            $query = $projects = Project::with('user');
+
+            switch ($option){
+
+                case 'newest' :
+                    $query->latest();
+                    break;
+
+                case 'oldest':
+                    $query->oldest();
+                    break;
+
+                case 'information' :
+                    $query->where('type_id', 1);
+                    break;
+
+                case 'project' :
+                    $query->where('type_id', 2);
+                    break;
+
+                case 'recruit' :
+                    $query->where('type_id', 3);
+                    break;
+
+                case 'service' :
+                    $query->where('type_id', 4);
+                    break;
+
+                case 'other' :
+                    $query->where('type_id', 5);
+                    break;
+
+            }
+
+            $projects = $query->paginate(6);
 
 
             return Inertia::render('Project/List', compact('projects'));
@@ -46,8 +82,8 @@ class ProjectController extends Controller
     // プロジェクト詳細ページ
     public function detail($project_id){
         try{
-            $project = Project::where('id', $project_id)->first();
-            $user = $project->user;
+            $project = Project::where('id', $project_id)->with('user')->first();
+            $user = Auth::user();
             $messages = PublicMessage::where('project_id', $project->id)->with('user')->get();
             // すでに応募しているかのフラグ
             $applyFlg = Apply::where('user_id', Auth::id())

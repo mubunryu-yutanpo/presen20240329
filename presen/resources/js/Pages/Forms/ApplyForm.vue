@@ -8,7 +8,7 @@ const props = defineProps({
 const form = useForm({});
 
 function submitApply() {
-    form.post(route('apply', { projectId: props.projectId }));
+    form.post(route('apply', { project_id: props.projectId }));
 }
 </script>
 

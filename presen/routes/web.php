@@ -7,6 +7,7 @@ use App\Http\Controllers\MessageController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Models\Project;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,11 +21,14 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
+    $projectList = Project::with('type')->inRandomOrder()->take(8)->get();
+
+    return Inertia::render('Home', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
+        'projectList' => $projectList,
     ]);
 });
 
@@ -44,7 +48,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     //==========================================================================================================
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     //==========================================================================================================
@@ -75,15 +79,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/chat/list/{user_id}', [MessageController::class, 'chatList'])->where('user_id', '[0-9]+')->name('chat.list');
     Route::get('/chat/{chat_id}', [MessageController::class, 'chatDetail'])->where('chat_id', '[0-9]+')->name('chat.detail');
-    Route::post('/chat/{chat_id}/{user1_id}/{user2_id}', [MessageController::class, 'addDirectMessage'])
-        ->where('chat_id', '[0-9]+')
-        ->where('user1_id', '[0-9]+')
-        ->where('user2_id', '[0-9]+')
-        ->name('dm.add');
+    Route::post('/chat/{chat_id}/{user1_id}/{user2_id}', [MessageController::class, 'addDirectMessage'])->name('dm.add');
 
     Route::post('/project/addMessage/{project_id}', [MessageController::class, 'addPublicMessage'])->where('project_id', '[0-9]+')->name('publick_message.add');
-
-    Route::get('/notifications/{user_id}', [MessageController::class, 'notifications'])->where('user_id', '[0-9]+')->name('notifications');
 
 });
 
