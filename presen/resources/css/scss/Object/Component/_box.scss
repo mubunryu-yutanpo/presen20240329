@@ -1,0 +1,45 @@
+.c-box{
+    margin: $space-default auto;
+
+    &--user{
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    &--image{
+        margin: 0 $space-ss;
+    }
+
+    &--project{
+        border-radius: $radius;
+        box-shadow: $shadow;
+        margin: $space_default auto;
+        padding: $space_default $space_m;
+    }
+
+    &--message{
+        background: #fff;
+        border-radius: $radius;
+        box-shadow: $shadow;
+        margin: $space_3l auto;
+        padding: $space_default $space_m;
+        width: 80%;
+
+        @include mq(){
+            width: 100%;
+        }
+    }
+
+    &--dm{
+        border-radius: $radius;
+        box-shadow: $shadow;
+        margin: $space_default auto;
+        padding: $space_default $space_l;
+    }
+
+    &--link{
+        margin: $space_m auto;
+        text-align: right;
+    }
+}

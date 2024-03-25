@@ -9,6 +9,18 @@
         </template>
 
         <div class="p-mypage c-siteView">
+
+            <div class="c-box--user p-mypage__user">
+                <div class="c-box--image p-mypage__avatar">
+                    <img :src="user.avatar" alt="" class="c-image p-mypage__avatar--image">
+                </div>
+                <p class="c-text p-mypage__name">{{ user.name }}さん</p>
+            </div>
+
+            <div v-if="unreadFlg" class="p-mypage__notification">
+                <p class="c-text p-mypage__notification--text">新しいメッセージがあります</p>
+            </div>
+
             <!-- 投稿した案件の表示 -->
             <section class="c-section p-posted">
                 <h2 class="c-title c-title--sub p-posted__title">投稿した案件</h2>
@@ -62,6 +74,7 @@ defineProps([
     'user',
     'postedProjects',
     'appliedProjects',
-    'commentedProjects'
+    'commentedProjects',
+    'unreadFlg',
 ]);
 </script>

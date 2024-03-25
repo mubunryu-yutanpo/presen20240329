@@ -9,7 +9,7 @@
         <div class="c-siteView p-wrap">
 
             <!--      詳細      -->
-            <div class="p-detail__detail">
+            <div class="p-detail">
                 <!--       シェア         -->
                 <button class="p-detail__share" @click="shareOnX">
                     <i class="fa-brands fa-x-twitter"></i>
@@ -81,11 +81,12 @@ const formattedPrice = computed(() => {
     return Number(project.price).toLocaleString('ja-JP');
 });
 
-// Xにシェアする関数
+// Xにシェアする
 const shareOnX = () => {
     const xText = `プロジェクト名: 【 ${project.title} 】- match-マッチ-　IT技術のアウトソーシングをもっと気軽に！ぜひ試してみてね！`;
     const xUrl = `https://sonzaisinaikedone.com/project/detail/${project.id}`;
     const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(xText)}&url=${encodeURIComponent(xUrl)}`;
     window.open(twitterUrl, '_blank');
 };
+
 </script>
