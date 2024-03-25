@@ -29,6 +29,11 @@ class MessageController extends Controller
     // DM
     //===================================================================================
 
+    // チャット（DM）ルームへ
+    public function chatShow($user_id, $partner_id){
+
+    }
+
     // DM一覧(自分が関係するchat一覧)ページへ
     public function chatList($user_id){
         try {

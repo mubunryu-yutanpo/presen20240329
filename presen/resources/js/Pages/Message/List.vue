@@ -11,8 +11,8 @@
             <div class="c-box--dm p-directMessage" v-for="chat in chats.data" :key="chat.id">
 
                 <div class="c-box--user p-directMessage__user">
-                    <div class="p-directMessage__avatar">
-                        <img :src="chat.partner.avatar" class="p-directMessage__avatar--image">
+                    <div class="c-box--image p-directMessage__avatar">
+                        <img :src="chat.partner.avatar" class="c-image p-directMessage__avatar--image">
                     </div>
                     <p class="p-directMessage__user--name">{{ chat.partner.name }}</p>
                 </div>
@@ -26,7 +26,9 @@
                     </p>
                 </div>
 
-                <Link :href="`/chat/${chat.id}`">メッセージを確認する</Link>
+                <div class="c-box--link p-directMessage__action">
+                    <Link :href="`/chat/${chat.id}`" class="c-link p-directMessage__link">メッセージを確認する</Link>
+                </div>
             </div>
         </div>
 

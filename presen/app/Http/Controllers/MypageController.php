@@ -24,7 +24,6 @@ class MypageController extends Controller
             $user = User::find(Auth::id());
 
             // 投稿した案件の取得
-            //$postedProjects = Project::where('user_id', $user->id)->latest()->take(5)->get();
             $postedProjects = Project::where('user_id', $user->id)->latest()->take(5)->get()->map(function ($project) {
                 $project->detailUrl = route('project.detail', ['project_id' => $project->id]);
                 return $project;
@@ -43,13 +42,23 @@ class MypageController extends Controller
             });
 
             // 通知
+            $chats = Chat::where('user1_id', $user->id)
+                        ->orWhere('user2_id', $user->id)
+                        ->get();
 
-            return Inertia::render('Profile/Mypage', [
-                'user' => $user,
-                'postedProjects' => $postedProjects,
-                'appliedProjects' => $appliedProjects,
-                'commentedProjects' => $commentedProjects,
-            ]);
+            $unreadFlg = false;
+
+            foreach ($chats as $chat) {
+                $chat->unread = $chat->hasUnreadMessages();
+                // 未読メッセージがある場合はフラグを立てる
+                if($chat->unread){
+                    $unreadFlg = true;
+                }
+            }
+
+            return Inertia::render('Profile/Mypage',
+                compact('user', 'postedProjects', 'appliedProjects', 'commentedProjects', 'unreadFlg')
+            );
 
         }catch (Exception $e){
             // エラー時

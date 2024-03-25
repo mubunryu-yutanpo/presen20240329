@@ -64,7 +64,7 @@
                     </div>
                     <div class="p-about__content">
                         <h3 class="p-about__content--title c-title">やり取りはメッセージで</h3>
-                        <p class="p-about__content--text c-text">プロジェクトごとにコメントができ、気軽に気になる部分を聞けます。詳細をDMで聞くことも可能。</p>
+                        <p class="p-about__content--text c-text">プロジェクトごとにコメントができ、気軽に気になる部分を聞けます。応募後はDMでやりとりを行います。</p>
                     </div>
                 </div>
 

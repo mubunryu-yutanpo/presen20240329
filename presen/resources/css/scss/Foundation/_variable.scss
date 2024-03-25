@@ -1,0 +1,67 @@
+// Body
+$default-bg: #FBF2CF;
+
+// Typography
+$font-family-sans-serif: 'Nunito', sans-serif;
+$default-font-family: 'Kaisei Opti', serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+//スペース
+$space-ss: 5px;
+$space_s: 10px;
+$space_default: 15px;
+$space_m: 20px;
+$space_l: 25px;
+$space_2l: 30px;
+$space_3l: 40px;
+
+//文字サイズ
+$font-size_ss:12px;
+$font-size_s:14px;
+$font-size_default:16px;
+$font-size_m: 17px;
+$font-size_l:18px;
+$font-size_2l:20px;
+$font-size_3l:24px;
+$font-size_4l:30px;
+
+$indigo: #6574cd;
+$orange: #f6993f;
+$teal: #4dc0b5;
+$cyan: #6cb2eb;
+$gray: #ededec;
+$lightgray: rgba(237, 237, 236, 0.5);
+$twitter: #1da1f2;
+$lightblue:rgb(198,212,225);
+$white:rgb(255,255,255);
+$lightbrown:rgb(235,231,225);
+$brown: rgb(189,184,173);
+
+// match
+$pink: #feb3eb;
+$yellow: #ffffaa;
+$red: #ed1c24;
+$blue: #235789;
+$black: #06070e;
+$green: #395b50;
+$purple: #352652;
+
+// box関連
+$radius : 10px;
+$shadow : 0 0 8px $lightbrown;
+
+
+//ブレークポイント
+$breakpoints: (
+    'sm': 'screen and (max-width:479px)',
+    'md': 'screen and (max-width:767px)',
+    'lg': 'screen and (max-width:1000px)',
+) !default;
+
+//mixin
+@mixin mq($breakpoint: md){
+    @media #{map-get($breakpoints,$breakpoint)}{
+        @content;
+    }
+}

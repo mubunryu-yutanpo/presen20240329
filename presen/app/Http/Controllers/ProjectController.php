@@ -331,12 +331,37 @@ class ProjectController extends Controller
                 'project_id' => $project_id,
             ]);
 
+            // チャットが既に存在するか確認
+            $chat = Chat::where(function($query) use ($user, $project) {
+                $query->where('user1_id', $user->id)
+                    ->where('user2_id', $project->user_id);
+            })->orWhere(function($query) use ($user, $project) {
+                $query->where('user1_id', $project->user_id)
+                    ->where('user2_id', $user->id);
+            })->first();
+
+            // 既存のチャットがなければ新しく作成
+            if (!$chat) {
+                $chat = Chat::create([
+                    'user1_id' => $user->id,
+                    'user2_id' => $project->user_id,
+                ]);
+            }
+
+            // プロジェクトの投稿者から応募者へのメッセージをチャットに追加
+            DirectMessage::create([
+                'chat_id' => $chat->id,
+                'sender_id' => $project->user_id,
+                'receiver_id' => $user->id,
+                'comment' => 'プロジェクトへのご応募ありがとうございます！',
+            ]);
+
             // ユーザーにメールで通知
             Mail::to($user->email)->send(new ApplyNotification($user, $project));
 
 
-            return redirect()->route('mypage')->with([
-                'message' => '応募しました！',
+            return redirect()->route('chat.detail', ['chat_id' => $chat->id])->with([
+                'message' => '応募が完了しました！メッセージを送りましょう！',
                 'status'  => 'success',
             ]);
 

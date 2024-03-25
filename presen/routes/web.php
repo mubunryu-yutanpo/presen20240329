@@ -77,8 +77,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // チャット・メッセージ関連
     //==========================================================================================================
 
+
     Route::get('/chat/list/{user_id}', [MessageController::class, 'chatList'])->where('user_id', '[0-9]+')->name('chat.list');
-    Route::get('/chat/{chat_id}', [MessageController::class, 'chatDetail'])->where('chat_id', '[0-9]+')->name('chat.detail');
+    Route::get('/chat/{chat_id}', [MessageController::class, 'chatDetail'])->name('chat.detail');
     Route::post('/chat/{chat_id}/{user1_id}/{user2_id}', [MessageController::class, 'addDirectMessage'])->name('dm.add');
 
     Route::post('/project/addMessage/{project_id}', [MessageController::class, 'addPublicMessage'])->where('project_id', '[0-9]+')->name('publick_message.add');
