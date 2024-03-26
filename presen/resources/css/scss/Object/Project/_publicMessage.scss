@@ -1,0 +1,52 @@
+.p-publicMessage{
+    margin: $space_3l $space_default;
+    width: auto;
+
+    @include mq(){
+        margin: $space_3l 0;
+    }
+
+    &__container{
+        margin: $space_2l auto;
+    }
+
+    &__user{
+        justify-content: flex-start;
+        margin-bottom: $space_2l;
+    }
+
+    &__avatar{
+
+        &--image{
+            height: 40px;
+            width: 40px;
+        }
+    }
+
+    &__content{
+        background: $lightgray;
+        border-radius: $radius;
+        margin-top: $space_2l;
+        padding: $space_s $space_default;
+        position: relative;
+        width: fit-content;
+
+        &:after {
+            border: solid transparent;
+            content:'';
+            height:0;
+            width:0;
+            pointer-events:none;
+            position:absolute;
+            border-top-width:10px;
+            border-bottom-width:10px;
+            border-left-width:12px;
+            border-right-width:12px;
+            margin-left: -17px;
+            border-bottom-color:$lightgray;
+            bottom:100%;
+            left:20%;
+        }
+    }
+
+}

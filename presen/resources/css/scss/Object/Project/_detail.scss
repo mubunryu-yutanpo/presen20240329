@@ -1,0 +1,84 @@
+.p-detail{
+    background: #fff;
+    border-radius: $radius;
+    box-shadow: $shadow;
+    margin: 0 auto;
+    padding: $space_2l $space_default;
+    width: 80%;
+
+    @include mq(){
+        width: 100%;
+    }
+
+    &__share{
+        background: $black;
+
+        &:hover{
+            background: #fff;
+            color: $black;
+        }
+    }
+
+    &__title{
+        font-size: $font-size_4l;
+        margin: $space_2l auto;
+        text-align: center;
+
+        @include mq(sm){
+            font-size: $font-size_3l;
+        }
+
+        &--sub{
+            margin: $space_2l 0;
+        }
+    }
+
+    &__thumbnail{
+        border-radius: 5px;
+        box-shadow: $shadow;
+        margin: 0 auto $space_3l;
+        max-width: 400px;
+        max-height: 400px;
+        overflow: hidden;
+        text-align: center;
+        width: calc(100% - 30px);
+
+        &--item{
+            border-radius: 2px;
+            height: 100%;
+            object-fit: contain;
+            width: 100%;
+        }
+    }
+
+    &__price{
+        color: $red;
+        font-size: $font-size_3l;
+    }
+
+    &__link{
+        margin: $space_2l $space_default;
+
+        &--item{
+            background: $purple;
+            border-radius: $radius;
+            box-shadow: $shadow;
+            color: #fff;
+            font-weight: bold;
+            opacity: 1;
+            padding: $space_default $space_m;
+            transition: all .3s;
+
+            &:hover{
+                color: $yellow;
+                opacity: .8;
+                transition: all .3s;
+            }
+        }
+    }
+
+    &__applied{
+        margin-top: 80px;
+        text-align: center;
+    }
+}

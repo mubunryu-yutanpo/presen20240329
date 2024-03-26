@@ -1,0 +1,10 @@
+.p-dmList{
+
+    &__user{
+        justify-content: flex-start;
+    }
+
+    &__notification{
+        margin: $space_l 0;
+    }
+}

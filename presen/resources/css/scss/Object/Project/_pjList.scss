@@ -1,0 +1,12 @@
+.p-pjList{
+    background: $default-bg;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    max-width: 2000px;
+    padding: $space_2l $space_default;
+
+    @include mq(lg){
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));;
+    }
+
+}

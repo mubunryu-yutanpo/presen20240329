@@ -1,8 +1,8 @@
 <template>
-    <div class="c-box--grid p-wrap p-wrap--project">
 
-        <!-- ソート -->
-        <select v-model="sortOption" @change="fetchSortedProjects" class="c-select p-sort">
+    <!-- ソート -->
+    <div class="p-sort">
+        <select v-model="sortOption" @change="fetchSortedProjects" class="c-select p-sort__select">
             <option value="newest">投稿日の新しい順</option>
             <option value="oldest">投稿日の古い順</option>
             <option value="information">タイプ：情報提供</option>
@@ -11,6 +11,9 @@
             <option value="service">タイプ：サービス提供</option>
             <option value="other">タイプ：その他</option>
         </select>
+    </div>
+
+    <div class="p-pjList">
 
         <template v-if="projects.data.length">
             <div class="c-box--project p-project" v-for="project in projects.data" :key="project.id">

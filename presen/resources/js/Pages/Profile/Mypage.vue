@@ -52,7 +52,7 @@
                 <h2 class="c-title c-title--sub p-commented__title">コメントした案件</h2>
 
                 <div class="c-box--project p-project" v-for="comment in commentedProjects" :key="comment.id">
-                    <h3 class="c-title c-title--comment p-comment__title">{{ comment.project.title }}</h3>
+                    <h3 class="c-title c-title--comment p-commented__title">{{ comment.project.title }}</h3>
                     <img :src="comment.project.thumbnail" alt="" class="c-image p-project__image">
                     <p class="c-text p-project__text">{{ comment.project.content }}</p>
                     <Link :href="comment.project.detailUrl" class="c-link p-project__link">このプロジェクトを見る</Link>

@@ -8,26 +8,26 @@
 
         <div class="c-box--message p-wrap">
 
-            <div class="c-box--dm p-directMessage" v-for="chat in chats.data" :key="chat.id">
+            <div class="c-box--dm p-dmList" v-for="chat in chats.data" :key="chat.id">
 
-                <div class="c-box--user p-directMessage__user">
-                    <div class="c-box--image p-directMessage__avatar">
-                        <img :src="chat.partner.avatar" class="c-image p-directMessage__avatar--image">
+                <div class="c-box--user p-dmList__user">
+                    <div class="c-box--image p-dmList__avatar">
+                        <img :src="chat.partner.avatar" class="c-image p-dmList__avatar--image">
                     </div>
-                    <p class="p-directMessage__user--name">{{ chat.partner.name }}</p>
+                    <p class="p-dmList__user--name">{{ chat.partner.name }}</p>
                 </div>
 
-                <div class="p-directMessage__notification">
-                    <p class="p-directMessage__notification--unread" v-if="chat.unread">新しいメッセージがあります</p>
+                <div class="p-dmList__notification">
+                    <p class="p-dmList__notification--unread" v-if="chat.unread">新しいメッセージがあります</p>
 
                     <!-- direct_messagesが存在し、かつ長さが0より大きい場合のみメッセージを表示 -->
-                    <p class="p-directMessage__notification--read" v-else-if="chat.direct_messages && chat.direct_messages.length > 0">
+                    <p class="p-dmList__notification--read" v-else-if="chat.direct_messages && chat.direct_messages.length > 0">
                         {{ chat.direct_messages[0].comment }}
                     </p>
                 </div>
 
-                <div class="c-box--link p-directMessage__action">
-                    <Link :href="`/chat/${chat.id}`" class="c-link p-directMessage__link">メッセージを確認する</Link>
+                <div class="c-box--link p-dmList__action">
+                    <Link :href="`/chat/${chat.id}`" class="c-link p-dmList__link">メッセージを確認する</Link>
                 </div>
             </div>
         </div>

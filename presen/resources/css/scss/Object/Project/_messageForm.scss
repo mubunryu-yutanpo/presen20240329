@@ -1,0 +1,59 @@
+.p-messageForm{
+    align-items: center;
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+    display: flex;
+    justify-content: space-around;
+    padding: 0;
+    position: relative;
+
+    @include mq(){
+        margin: $space_3l 0;
+    }
+
+
+    &__textarea{
+        background: #fff;
+        border-radius: $radius;
+        box-shadow: $shadow;
+        padding: 25px 40px 0 15px;
+        width: 100%;
+
+        @include mq(){
+            padding: $space_l $space_l 0 $space_default;
+        }
+
+    }
+
+    &__submit{
+        right: 2%;
+        opacity: 1;
+        position: absolute;
+        transition: all .5s;
+
+        @include mq(){
+            right: 5%;
+        }
+
+        &:hover{
+            opacity: .8;
+            transition: all .5s;
+
+            .p-messageForm__icon{
+                transform: rotate(40deg);
+            }
+
+        }
+    }
+
+    &__icon{
+        font-size: $font-size_2l;
+        transition: all .5s;
+
+        &:hover{
+            transition: all .5s;
+            transform: rotate(40deg);
+        }
+    }
+}
