@@ -8,53 +8,61 @@
 
         <div class="c-siteView p-wrap">
 
-            <!--      詳細      -->
             <div class="p-detail">
+
                 <!--       シェア         -->
-                <button class="p-detail__share" @click="shareOnX">
-                    <i class="fa-brands fa-x-twitter"></i>
-                    Xにシェア
+                <button class="c-button p-detail__share" @click="shareOnX">
+                    <i class="fa-brands fa-x-twitter c-icon"></i>
+                    シェアする
                 </button>
 
                 <h3 class="c-title c-title--project p-detail__title">{{ project.title }}</h3>
 
                 <div class="c-box--image p-detail__thumbnail">
-                    <img :src="project.thumbnail" alt="" class="c-image p-detail__image--item">
+                    <img :src="project.thumbnail" alt="" class="c-image p-detail__thumbnail--item">
                 </div>
 
                 <h4 class="c-text p-detail__title--sub">【内容】</h4>
-                <p class="c-text p-detail__text">{{ project.content }}</p>
+                <p class="c-text p-detail__content">{{ project.content }}</p>
 
+                <h4 class="c-text p-detail__title--sub">【目安料金】</h4>
                 <p class="c-price p-detail__price">{{ formattedPrice }} 円</p>
-            </div>
 
-            <!--      コメント      -->
-            <div class="c-box--message p-publicMessage">
-                <div class="p-publicMessage__container" v-for="message in messages" :key="message.id">
 
-                    <div class="c-box--user p-publicMessage__user">
-                        <p class="c-text--user p-publicMessage__user--name">{{ message.user.name }}</p>
-                        <div class="c-box--image p-publicMessage__avatar">
-                            <img :src="message.user.avatar" alt="" class="c-image p-publicMessage__avatar--image">
+                <!--      コメント      -->
+                <h4 class="c-text p-detail__title--sub">【コメント】</h4>
+                <div class="c-box--message p-publicMessage">
+                    <div class="p-publicMessage__container" v-for="message in messages" :key="message.id" v-if="messages.length > 0">
+
+                        <div class="c-box--user p-publicMessage__user">
+                            <p class="c-text--user p-publicMessage__user--name">{{ message.user.name }}</p>
+                            <div class="c-box--image p-publicMessage__avatar">
+                                <img :src="message.user.avatar" alt="" class="c-image p-publicMessage__avatar--image">
+                            </div>
+                        </div>
+
+                        <div class="p-publicMessage__content">
+                            <p class="c-text p-publicMessage__content--comment">{{ message.comment }}</p>
                         </div>
                     </div>
 
-                    <div class="p-publicMessage__about">
-                        <p class="c-text p-publicMessage__about--comment">{{ message.comment }}</p>
+                    <div class="p-publicMessage__none" v-else>
+                        <p class="c-text p-publicMessage__none--text">まだコメントはありません</p>
                     </div>
                 </div>
 
                 <CommentForm :projectId="project.id"></CommentForm>
 
-            </div>
 
-            <!--     応募もしくは編集       -->
-            <p v-if="applyFlg" class="c-text">この案件にはすでに応募しています</p>
+                <!--     応募もしくは編集       -->
+                <p v-if="applyFlg" class="c-text p-detail__applied">この案件にはすでに応募しています</p>
 
-            <ApplyForm :projectId="project.id" v-else-if="user.id !== project.user.id"></ApplyForm>
+                <ApplyForm :projectId="project.id" v-else-if="user.id !== project.user.id"></ApplyForm>
 
-            <div class="c-box--link p-detail__link" v-else>
-                <Link :href="`/project/edit/${project.id}`" class="c-link p-detail__link--item">編集する</Link>
+                <div class="c-box--link p-detail__link" v-else>
+                    <Link :href="`/project/edit/${project.id}`" class="c-link p-detail__link--item">編集する</Link>
+                </div>
+
             </div>
 
         </div>

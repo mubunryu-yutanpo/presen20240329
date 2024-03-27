@@ -112,7 +112,7 @@ class ProfileController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with([
+        return redirect()->route('home')->with([
             'message' => 'アカウントを削除しました',
             'status'  => 'success',
         ]);

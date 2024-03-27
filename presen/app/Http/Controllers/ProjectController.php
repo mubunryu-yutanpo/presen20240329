@@ -30,7 +30,7 @@ class ProjectController extends Controller
         try{
             $option = $request->query('sort', 'newest');
 
-            $query = $projects = Project::with('user');
+            $query = Project::with('user');
 
             switch ($option){
 

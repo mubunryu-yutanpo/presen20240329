@@ -22,17 +22,15 @@ const showingNavigationDropdown = ref(false);
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
-                                    <ApplicationLogo
-                                        class="block h-9 w-auto fill-current text-gray-800"
-                                    />
+                                <Link href="/">
+                                    <img src="/images/logo.webp" alt="" class="c-image p-logo">
                                 </Link>
                             </div>
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
+                                <NavLink :href="route('home')" :active="route().current('home')">
+                                    match
                                 </NavLink>
                             </div>
                         </div>
@@ -47,7 +45,7 @@ const showingNavigationDropdown = ref(false);
                                                 type="button"
                                                 class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                             >
-                                                <img :src="$page.props.auth.user.avatar" alt="">
+                                                <img :src="$page.props.auth.user.avatar" alt="" class="c-image">
                                                 {{ $page.props.auth.user.name }}
 
                                                 <svg
@@ -67,9 +65,9 @@ const showingNavigationDropdown = ref(false);
                                     </template>
 
                                     <template #content>
-                                        <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
+                                        <DropdownLink :href="route('profile.edit')"> プロフィール </DropdownLink>
                                         <DropdownLink :href="route('logout')" method="post" as="button">
-                                            Log Out
+                                            ログアウト
                                         </DropdownLink>
                                         <DropdownLink :href="route('list')">全てのプロジェクト</DropdownLink>
                                         <DropdownLink :href="route('mypage')">マイページ</DropdownLink>

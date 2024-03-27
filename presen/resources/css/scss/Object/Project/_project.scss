@@ -1,0 +1,58 @@
+.p-project{
+    background: #fff;
+    width: calc(100% - 10px);
+    max-width: 100%;
+
+    &__title{
+        height: 70px;
+        margin: $space_2l auto;
+        overflow-y: auto;
+        text-align: center;
+    }
+
+    &__avatar{
+        &--image{
+            height: 40px;
+            width: 40px;
+        }
+    }
+
+    &__thumbnail{
+        border-radius: $radius;
+        box-shadow: $shadow;
+        display: flex;
+        justify-content: center;
+        height: 250px;
+        margin: $space_l auto;
+        overflow: hidden;
+        width: 250px;
+
+        @include mq(lg){
+            width: 200px;
+            height: 200px;
+        }
+
+        @include mq(md){
+            height: 180px;
+            width: 180px;
+        }
+
+
+        &--item{
+            height: 100%;
+            object-fit: contain;
+            width: 100%;
+        }
+    }
+
+    &__content{
+        &--text{
+            margin-top: $space_m;
+        }
+
+        &--mypage{
+            height: 95px;
+            overflow-y: auto;
+        }
+    }
+}

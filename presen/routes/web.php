@@ -30,7 +30,7 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
         'projectList' => $projectList,
     ]);
-});
+})->name('home');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

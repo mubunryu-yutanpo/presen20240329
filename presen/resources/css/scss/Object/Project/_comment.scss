@@ -1,0 +1,50 @@
+.p-comment{
+    align-items: center;
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+    display: flex;
+    justify-content: space-around;
+    margin: $space_3l $space_default;
+    padding: 0;
+    position: relative;
+    width: auto;
+
+    @include mq(){
+        margin: $space_3l 0;
+    }
+
+    &__textarea{
+        background: #fff;
+        padding: 25px 40px 0 15px;
+
+        @include mq(){
+            padding: $space_l $space_l 0 $space_default;
+        }
+    }
+
+    &__submit{
+        right: 2%;
+        opacity: 1;
+        position: absolute;
+        transition: all .5s;
+
+        @include mq(){
+            right: 5%;
+        }
+
+        &:hover{
+            opacity: .8;
+            transition: all .5s;
+
+            .p-comment__icon{
+                transform: rotate(40deg);
+            }
+
+        }
+    }
+
+    &__icon{
+        font-size: $font-size_2l;
+    }
+}

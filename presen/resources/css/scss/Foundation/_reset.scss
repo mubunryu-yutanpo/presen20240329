@@ -28,6 +28,10 @@ a{
     color: $blue;
 }
 
+a:hover{
+    color: $red;
+}
+
 a:focus{
     outline: none;
 }
@@ -88,5 +92,9 @@ label{
 
 textarea{
     resize: none;
+}
+
+p{
+    word-break: normal;
 }
 

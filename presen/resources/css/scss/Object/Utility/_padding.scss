@@ -1,0 +1,12 @@
+.u-padding{
+    padding: $space_2l 25%;
+
+    @include mq(lg){
+        padding: $space_2l 10%;
+    }
+
+    @include mq(){
+        padding: $space_2l $space_default;
+    }
+
+}

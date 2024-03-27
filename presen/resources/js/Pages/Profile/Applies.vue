@@ -7,7 +7,9 @@
             <h1 class="c-title c-title--top">応募したプロジェクト一覧</h1>
         </template>
 
-        <ProjectList :user="user" :projects="projects" />
+        <div class="c-siteView">
+            <ProjectList :user="user" :projects="projects" />
+        </div>
     </AuthenticatedLayout>
 
 </template>

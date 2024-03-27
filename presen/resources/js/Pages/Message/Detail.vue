@@ -6,7 +6,7 @@
             <h1 class="c-title c-title--top">DM詳細</h1>
         </template>
 
-        <div class="c-box--message p-wrap">
+        <div class="c-box--message p-messageContainer">
 
             <div v-for="message in messages" :key="message.id" class="p-directMessage" :class="{'mine' : message.user.id === user_id}">
 
@@ -22,9 +22,10 @@
                 </div>
             </div>
 
-            <DirectMessgeCommentForm :chatId="chat.id" :user1Id="chat.user1_id" :user2Id="chat.user2_id"/>
-
         </div>
+
+        <DirectMessgeCommentForm :chatId="chat.id" :user1Id="chat.user1_id" :user2Id="chat.user2_id"/>
+
     </AuthenticatedLayout>
 
 </template>

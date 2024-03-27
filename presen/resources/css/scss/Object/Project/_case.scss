@@ -1,0 +1,28 @@
+.p-case{
+    background: rgba(254, 179, 235, .3); //$pinkの透明度30%
+    padding: $space_3l 0;
+
+    &__title{
+        color: $purple;
+        text-align: center;
+
+        &--sub{
+            color: #fff;
+            font-size: $font-size_m;
+            font-weight: bold;
+            margin: 0 0 $space_2l;
+            text-align: center;
+        }
+    }
+    &__container{
+        padding: $space_3l $space_2l;
+
+        @include mq(sm){
+            padding: 0 $space_l;
+        }
+    }
+
+    &__box{
+        max-width: 100%;
+    }
+}

@@ -1,0 +1,21 @@
+.p-home{
+    &Header{
+        position: relative;
+
+        &__container{
+            position: fixed;
+            right: 15px;
+            top: 10px;
+            z-index: 10;
+        }
+
+        &__link{
+            font-weight: bold;
+
+            &:first-child{
+                margin-right: $space_s;
+            }
+        }
+
+    }
+}

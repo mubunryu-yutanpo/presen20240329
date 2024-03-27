@@ -1,6 +1,7 @@
 import './bootstrap';
 import '../css/app.css';
 import '../css/scss/app.css';
+import 'swiper/css';
 
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
