@@ -1,0 +1,55 @@
+.p-preview{
+
+    &__container{
+        border: 1px dotted $brown;
+        border-radius: $radius;
+        box-shadow: $shadow;
+        height: 450px;
+        padding: $space_l $space_default;
+        position: relative;
+
+        @include mq(sm){
+            height: 250px;
+        }
+    }
+
+    &__text{
+        bottom: 50%;
+        color: $brown;
+        left: 25%;
+        right: 25%;
+        position: absolute;
+        text-align: center;
+        top: 50%;
+
+        &.off{
+            display: none;
+        }
+    }
+
+    &__input{
+        height: 100%;
+        left: 0;
+        opacity: 0;
+        position: absolute;
+        top: 0;
+    }
+
+    &__image{
+        height: auto;
+        max-height: 400px;
+        max-width: 400px;
+        margin: 0 auto;
+        overflow: hidden;
+        width: 100%;
+
+        @include mq(sm){
+            max-height: 200px;
+            max-width: 200px;
+        }
+
+        &--item{
+            object-fit: contain;
+        }
+    }
+}

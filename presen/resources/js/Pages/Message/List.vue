@@ -18,7 +18,10 @@
                 </div>
 
                 <div class="p-dmList__notification">
-                    <p class="p-dmList__notification--unread" v-if="chat.unread">新しいメッセージがあります</p>
+                    <p class="p-dmList__notification--unread" v-if="chat.unread">
+                        <span class="p-dmList__notification--point">⚫︎</span>
+                        新しいメッセージがあります
+                    </p>
 
                     <!-- direct_messagesが存在し、かつ長さが0より大きい場合のみメッセージを表示 -->
                     <p class="p-dmList__notification--read" v-else-if="chat.direct_messages && chat.direct_messages.length > 0">

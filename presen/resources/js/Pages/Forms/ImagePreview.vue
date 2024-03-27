@@ -1,9 +1,12 @@
 <template>
     <div class="p-preview">
         <label :for="inputId" class="c-label p-preview__label">{{ label }}</label>
-        <input :id="inputId" class="c-input p-preview__input" type="file" @change="handleFileChange" :name="name">
-        <div v-if="imagePreview" class="p-preview__image">
-            <img :src="imagePreview" class="p-preview__image--item" />
+        <div class="p-preview__container">
+            <input :id="inputId" class="c-input p-preview__input" type="file" @change="handleFileChange" :name="name">
+            <p class="p-preview__text" :class="{'off': imagePreview}">クリックして画像を選択</p>
+            <div v-if="imagePreview" class="p-preview__image">
+                <img :src="imagePreview" class="p-preview__image--item" />
+            </div>
         </div>
     </div>
 </template>

@@ -1,0 +1,40 @@
+.p-catch{
+    background: $yellow;
+
+    &__image{
+
+        @include mq(){
+            display: none;
+        }
+
+        &--sp{
+            display: none;
+
+            @include mq(){
+                display: block;
+            }
+        }
+    }
+
+    &__container{
+        padding: $space_3l $space_l
+    }
+
+    &__text{
+        font-size: $font-size_l;
+        text-align: center;
+
+        @include mq(){
+            font-size: $font-size_default;
+        }
+
+        &--big{
+            color: $purple;
+            font-size: $font-size_3l;
+
+            @include mq(){
+                font-size: 22px;
+            }
+        }
+    }
+}

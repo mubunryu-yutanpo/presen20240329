@@ -2,11 +2,4 @@
     background: $default-bg;
     padding: $space_2l $space_default;
     text-align: right;
-
-    &__select{
-        border: none;
-        border-radius: $radius;
-        box-shadow: $shadow;
-        cursor: pointer;
-    }
 }

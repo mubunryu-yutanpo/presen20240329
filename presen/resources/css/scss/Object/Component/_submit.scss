@@ -1,0 +1,13 @@
+.c-submit{
+    background: $purple;
+    border-radius: $radius;
+    box-shadow: $shadow;
+    color: #fff;
+    font-weight: bold;
+    padding: $space_s $space_default;
+
+    &:hover{
+        background: $brown;
+        color: $purple;
+    }
+}

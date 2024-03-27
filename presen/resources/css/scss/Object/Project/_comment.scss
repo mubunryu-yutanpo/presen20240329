@@ -16,10 +16,7 @@
 
     &__textarea{
         background: #fff;
-        border-radius: $radius;
-        box-shadow: $shadow;
         padding: 25px 40px 0 15px;
-        width: 100%;
 
         @include mq(){
             padding: $space_l $space_l 0 $space_default;

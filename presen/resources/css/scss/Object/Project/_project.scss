@@ -49,5 +49,10 @@
         &--text{
             margin-top: $space_m;
         }
+
+        &--mypage{
+            height: 95px;
+            overflow-y: auto;
+        }
     }
 }

@@ -6,5 +6,11 @@
 
     &__notification{
         margin: $space_l 0;
+
+        &--point{
+            color: $red;
+            font-size: $font-size_ss;
+        }
     }
+
 }
